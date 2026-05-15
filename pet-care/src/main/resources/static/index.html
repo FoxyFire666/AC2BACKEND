@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema PetCare</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { color: #333; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .box { padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input, select, button { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #4CAF50; color: #fff; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        ul { list-style-type: none; padding: 0; }
+        li { padding: 10px; border: 1px solid #ddd; margin-bottom: 8px; border-radius: 6px; background: #fff; }
+        .small { font-size: 0.95em; color: #555; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema PetCare</h1>
+
+        <div class="grid">
+            <div class="box">
+                <h2>Cadastrar Tutor</h2>
+                <form id="tutorForm">
+                    <label for="tutorNome">Nome do Tutor</label>
+                    <input type="text" id="tutorNome" placeholder="Nome" required>
+
+                    <label for="tutorEmail">Email</label>
+                    <input type="email" id="tutorEmail" placeholder="Email" required>
+
+                    <label for="tutorTelefone">Telefone</label>
+                    <input type="text" id="tutorTelefone" placeholder="Telefone">
+
+                    <label for="tutorEndereco">Endereço</label>
+                    <input type="text" id="tutorEndereco" placeholder="Endereço">
+
+                    <button type="submit">Cadastrar Tutor</button>
+                </form>
+
+                <h3>Lista de Tutores</h3>
+                <ul id="tutorList"></ul>
+            </div>
+
+            <div class="box">
+                <h2>Cadastrar Animal</h2>
+                <form id="animalForm">
+                    <label for="nome">Nome do Animal</label>
+                    <input type="text" id="nome" placeholder="Nome do Animal" required>
+
+                    <label for="especie">Espécie</label>
+                    <input type="text" id="especie" placeholder="Espécie" required>
+
+                    <label for="raca">Raça</label>
+                    <input type="text" id="raca" placeholder="Raça" required>
+
+                    <label for="idade">Idade</label>
+                    <input type="number" id="idade" placeholder="Idade" required>
+
+                    <label for="tutorSelect">Tutor</label>
+                    <select id="tutorSelect" required>
+                        <option value="">Escolha um tutor</option>
+                    </select>
+
+                    <button type="submit">Cadastrar Animal</button>
+                </form>
+
+                <h3>Lista de Animais</h3>
+                <ul id="animalList"></ul>
+            </div>
+
+            <div class="box">
+                <h2>Agendar Consulta</h2>
+                <form id="consultaForm">
+                    <label for="consultaVeterinario">Veterinário</label>
+                    <input type="text" id="consultaVeterinario" placeholder="Nome do veterinário" required>
+
+                    <label for="consultaEspecialidade">Especialidade</label>
+                    <input type="text" id="consultaEspecialidade" placeholder="Especialidade (ex: Canino, Felino)" required>
+
+                    <label for="consultaDataHora">Data e Hora</label>
+                    <input type="datetime-local" id="consultaDataHora" required>
+
+                    <label for="consultaDescricao">Descrição</label>
+                    <input type="text" id="consultaDescricao" placeholder="Motivo da consulta" required>
+
+                    <label for="consultaAnimalSelect">Animal</label>
+                    <select id="consultaAnimalSelect" required>
+                        <option value="">Escolha um animal</option>
+                    </select>
+
+                    <button type="submit">Agendar Consulta</button>
+                </form>
+
+                <h3>Próximas Consultas</h3>
+                <ul id="consultaList"></ul>
+            </div>
+
+            <div class="box">
+                <h2>Registrar Prontuário</h2>
+                <form id="prontuarioForm">
+                    <label for="prontuarioData">Data da Consulta</label>
+                    <input type="date" id="prontuarioData" required>
+
+                    <label for="prontuarioVeterinario">Veterinário</label>
+                    <input type="text" id="prontuarioVeterinario" placeholder="Nome do veterinário" required>
+
+                    <label for="prontuarioDiagnostico">Diagnóstico</label>
+                    <input type="text" id="prontuarioDiagnostico" placeholder="Diagnóstico" required>
+
+                    <label for="prontuarioTratamento">Tratamento</label>
+                    <input type="text" id="prontuarioTratamento" placeholder="Tratamento" required>
+
+                    <label for="prontuarioAnimalSelect">Animal</label>
+                    <select id="prontuarioAnimalSelect" required>
+                        <option value="">Escolha um animal</option>
+                    </select>
+
+                    <button type="submit">Salvar Prontuário</button>
+                </form>
+
+                <h3>Histórico de Prontuários</h3>
+                <ul id="prontuarioList"></ul>
+            </div>
+
+            <div class="box">
+                <h2>Vacinação</h2>
+                <form id="vacinacaoForm">
+                    <label for="vacinaNome">Nome da Vacina</label>
+                    <input type="text" id="vacinaNome" placeholder="Nome da vacina" required>
+
+                    <label for="vacinaData">Data de Aplicação</label>
+                    <input type="date" id="vacinaData" required>
+
+                    <label for="vacinaProximaDose">Próxima Dose</label>
+                    <input type="date" id="vacinaProximaDose">
+
+                    <label for="vacinaAnimalSelect">Animal</label>
+                    <select id="vacinaAnimalSelect" required>
+                        <option value="">Escolha um animal</option>
+                    </select>
+
+                    <button type="submit">Registrar Vacinação</button>
+                </form>
+
+                <h3>Histórico de Vacinações</h3>
+                <ul id="vacinaList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8081/api';
+
+        async function loadTutores() {
+            try {
+                const response = await fetch(`${API_BASE}/tutores`);
+                const tutors = await response.json();
+                const tutorList = document.getElementById('tutorList');
+                const tutorSelect = document.getElementById('tutorSelect');
+                tutorList.innerHTML = '';
+                tutorSelect.innerHTML = '<option value="">Escolha um tutor</option>';
+
+                tutors.forEach(tutor => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${tutor.nome}</strong> (<span class="small">ID: ${tutor.id}</span>)<br>${tutor.email}`;
+                    tutorList.appendChild(li);
+
+                    const option = document.createElement('option');
+                    option.value = tutor.id;
+                    option.textContent = `${tutor.nome} (${tutor.email})`;
+                    tutorSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar tutores:', error);
+            }
+        }
+
+        async function loadAnimals() {
+            try {
+                const response = await fetch(`${API_BASE}/animais`);
+                const animals = await response.json();
+                const animalList = document.getElementById('animalList');
+                animalList.innerHTML = '';
+                populateAnimalSelects(animals);
+                animals.forEach(animal => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <strong>${animal.nome}</strong> - ${animal.especie} (${animal.raca})<br>
+                        Idade: ${animal.idade} anos<br>
+                        <span class="small">Tutor: ${animal.tutor?.nome || 'Sem tutor'}</span>
+                    `;
+                    animalList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar animais:', error);
+            }
+        }
+
+        function populateAnimalSelects(animals) {
+            const selects = [
+                document.getElementById('consultaAnimalSelect'),
+                document.getElementById('prontuarioAnimalSelect'),
+                document.getElementById('vacinaAnimalSelect')
+            ];
+            selects.forEach(select => {
+                if (!select) return;
+                select.innerHTML = '<option value="">Escolha um animal</option>';
+            });
+            animals.forEach(animal => {
+                const optionText = `${animal.nome} (${animal.especie}) - Tutor: ${animal.tutor?.nome || 'Sem tutor'}`;
+                selects.forEach(select => {
+                    if (!select) return;
+                    const option = document.createElement('option');
+                    option.value = animal.id;
+                    option.textContent = optionText;
+                    select.appendChild(option);
+                });
+            });
+        }
+
+        async function loadConsultas() {
+            try {
+                const response = await fetch(`${API_BASE}/consultas`);
+                const consultas = await response.json();
+                const consultaList = document.getElementById('consultaList');
+                consultaList.innerHTML = '';
+                if (consultas.length === 0) {
+                    consultaList.innerHTML = '<li>Nenhuma consulta agendada</li>';
+                    return;
+                }
+                consultas.forEach(consulta => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <strong>${consulta.descricao}</strong><br>
+                        <span class="small">Veterinário: ${consulta.veterinario} - Especialidade: ${consulta.especialidade}</span><br>
+                        <span class="small">Data: ${new Date(consulta.dataHora).toLocaleString()}</span><br>
+                        <span class="small">Animal: ${consulta.animal?.nome || 'Sem animal'}</span>
+                    `;
+                    consultaList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar consultas:', error);
+            }
+        }
+
+        async function loadProntuarios() {
+            try {
+                const response = await fetch(`${API_BASE}/prontuarios`);
+                const prontuarios = await response.json();
+                const prontuarioList = document.getElementById('prontuarioList');
+                prontuarioList.innerHTML = '';
+                if (prontuarios.length === 0) {
+                    prontuarioList.innerHTML = '<li>Nenhum prontuário registrado</li>';
+                    return;
+                }
+                prontuarios.forEach(prontuario => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <strong>${prontuario.diagnostico}</strong><br>
+                        <span class="small">Veterinário: ${prontuario.veterinario}</span><br>
+                        <span class="small">Tratamento: ${prontuario.tratamento}</span><br>
+                        <span class="small">Data: ${new Date(prontuario.dataConsulta).toLocaleDateString()}</span><br>
+                        <span class="small">Animal: ${prontuario.animal?.nome || 'Sem animal'}</span>
+                    `;
+                    prontuarioList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar prontuários:', error);
+            }
+        }
+
+        async function loadVacinacoes() {
+            try {
+                const response = await fetch(`${API_BASE}/vacinacoes`);
+                const vacinacoes = await response.json();
+                const vacinaList = document.getElementById('vacinaList');
+                vacinaList.innerHTML = '';
+                if (vacinacoes.length === 0) {
+                    vacinaList.innerHTML = '<li>Nenhuma vacinação registrada</li>';
+                    return;
+                }
+                vacinacoes.forEach(vacinacao => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <strong>${vacinacao.nomeVacina}</strong><br>
+                        <span class="small">Data: ${new Date(vacinacao.dataAplicacao).toLocaleDateString()}</span><br>
+                        <span class="small">Próxima dose: ${vacinacao.proximaDose ? new Date(vacinacao.proximaDose).toLocaleDateString() : 'N/A'}</span><br>
+                        <span class="small">Animal: ${vacinacao.animal?.nome || 'Sem animal'}</span>
+                    `;
+                    vacinaList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar vacinações:', error);
+            }
+        }
+
+        document.getElementById('tutorForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nome = document.getElementById('tutorNome').value;
+            const email = document.getElementById('tutorEmail').value;
+            const telefone = document.getElementById('tutorTelefone').value;
+            const endereco = document.getElementById('tutorEndereco').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/tutores`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nome, email, telefone, endereco })
+                });
+                if (response.ok) {
+                    document.getElementById('tutorForm').reset();
+                    loadTutores();
+                } else {
+                    const errorText = await response.text();
+                    alert('Erro ao cadastrar tutor: ' + errorText);
+                }
+            } catch (error) {
+                console.error('Erro ao cadastrar tutor:', error);
+            }
+        });
+
+        document.getElementById('animalForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const especie = document.getElementById('especie').value;
+            const raca = document.getElementById('raca').value;
+            const idade = parseInt(document.getElementById('idade').value, 10);
+            const tutorId = document.getElementById('tutorSelect').value;
+
+            if (!tutorId) {
+                alert('Selecione um tutor antes de cadastrar o animal.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/animais`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nome,
+                        especie,
+                        raca,
+                        idade,
+                        tutor: { id: parseInt(tutorId, 10) }
+                    })
+                });
+                if (response.ok) {
+                    document.getElementById('animalForm').reset();
+                    loadAnimals();
+                } else {
+                    const errorText = await response.text();
+                    alert('Erro ao cadastrar animal: ' + errorText);
+                }
+            } catch (error) {
+                console.error('Erro ao cadastrar animal:', error);
+            }
+        });
+
+        document.getElementById('consultaForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const veterinario = document.getElementById('consultaVeterinario').value;
+            const especialidade = document.getElementById('consultaEspecialidade').value;
+            const dataHora = document.getElementById('consultaDataHora').value;
+            const descricao = document.getElementById('consultaDescricao').value;
+            const animalId = document.getElementById('consultaAnimalSelect').value;
+
+            if (!animalId) {
+                alert('Selecione um animal para a consulta.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/consultas`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        veterinario,
+                        especialidade,
+                        dataHora,
+                        descricao,
+                        animal: { id: parseInt(animalId, 10) }
+                    })
+                });
+                if (response.ok) {
+                    document.getElementById('consultaForm').reset();
+                    loadConsultas();
+                } else {
+                    const errorText = await response.text();
+                    alert('Erro ao agendar consulta: ' + errorText);
+                }
+            } catch (error) {
+                console.error('Erro ao agendar consulta:', error);
+            }
+        });
+
+        document.getElementById('prontuarioForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const dataConsulta = document.getElementById('prontuarioData').value;
+            const veterinario = document.getElementById('prontuarioVeterinario').value;
+            const diagnostico = document.getElementById('prontuarioDiagnostico').value;
+            const tratamento = document.getElementById('prontuarioTratamento').value;
+            const animalId = document.getElementById('prontuarioAnimalSelect').value;
+
+            if (!animalId) {
+                alert('Selecione um animal para o prontuário.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/prontuarios`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        dataConsulta,
+                        veterinario,
+                        diagnostico,
+                        tratamento,
+                        animal: { id: parseInt(animalId, 10) }
+                    })
+                });
+                if (response.ok) {
+                    document.getElementById('prontuarioForm').reset();
+                    loadProntuarios();
+                } else {
+                    const errorText = await response.text();
+                    alert('Erro ao registrar prontuário: ' + errorText);
+                }
+            } catch (error) {
+                console.error('Erro ao registrar prontuário:', error);
+            }
+        });
+
+        document.getElementById('vacinacaoForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nomeVacina = document.getElementById('vacinaNome').value;
+            const dataAplicacao = document.getElementById('vacinaData').value;
+            const proximaDose = document.getElementById('vacinaProximaDose').value;
+            const animalId = document.getElementById('vacinaAnimalSelect').value;
+
+            if (!animalId) {
+                alert('Selecione um animal para a vacinação.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/vacinacoes`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nomeVacina,
+                        dataAplicacao,
+                        proximaDose: proximaDose || null,
+                        animal: { id: parseInt(animalId, 10) }
+                    })
+                });
+                if (response.ok) {
+                    document.getElementById('vacinacaoForm').reset();
+                    loadVacinacoes();
+                } else {
+                    const errorText = await response.text();
+                    alert('Erro ao registrar vacinação: ' + errorText);
+                }
+            } catch (error) {
+                console.error('Erro ao registrar vacinação:', error);
+            }
+        });
+
+        loadTutores();
+        loadAnimals();
+        loadConsultas();
+        loadProntuarios();
+        loadVacinacoes();
+    </script>
+</body>
+</html>
